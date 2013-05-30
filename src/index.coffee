@@ -22,7 +22,7 @@ module.exports = (file) ->
   compile = ->
     if isJSXExtension or isJSXPragma and isJSExtensionRe.exec file
       if isJSXExtension and not isJSXPragma
-        data = '/** @jsx React.DOM */\n' + data
+        data = '/** @jsx React.DOM */' + data
       try
         transformed = react.transform(data)
       catch e
