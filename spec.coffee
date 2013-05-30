@@ -21,8 +21,14 @@ describe 'reactify', ->
       ok result
       done()
 
-  it 'works for plain *.js', ->
+  it 'works for plain *.js', (done) ->
     bundle './fixtures/simple.js', (err, result) ->
       ok not err
       ok result
+      done()
+
+  it 'returns error on invalid JSX', (done) ->
+    bundle './fixtures/invalid.js', (err, result) ->
+      ok err
+      ok not result
       done()

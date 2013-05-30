@@ -23,7 +23,11 @@ module.exports = (file) ->
     if isJSXExtension or isJSXPragma and isJSExtensionRe.exec file
       if isJSXExtension and not isJSXPragma
         data = '/** @jsx React.DOM */\n' + data
-      this.queue(react.transform(data))
+      try
+        transformed = react.transform(data)
+      catch e
+        this.emit 'error', e
+      this.queue(transformed)
     else
       this.queue(data)
     this.queue(null)
