@@ -1,26 +1,23 @@
 react = require 'react-tools'
+docblock = require 'react-tools/vendor/fbtransform/lib/docblock'
 through = require 'through'
 
 isJSXExtensionRe = /^.+\.jsx$/
-isJSExtensionRe = /^.+\.js$/
-isJSXPragmaRe = /\/\*\* +@jsx +React.DOM +\*\//
+parsePragma = (data) ->
+  docblock.parseAsObject(docblock.extract(data))
 
 module.exports = (file) ->
   # check file extension or /** @jsx React.DOM */ pragma
-  isJSXExtension = isJSXExtensionRe.exec(file)
-  isJSXPragma = undefined
 
   data = ''
   write = (chunk) ->
     data += chunk
-    if isJSXPragma is undefined
-      newLineIdx = data.indexOf('\n')
-      if newLineIdx > -1
-        firstLine = data.substr(0, newLineIdx).trim()
-        isJSXPragma = isJSXPragmaRe.exec(firstLine)
 
   compile = ->
-    if isJSXExtension or isJSXPragma and isJSExtensionRe.exec file
+    isJSXExtension = isJSXExtensionRe.exec(file)
+    isJSXPragma = parsePragma(data).jsx == 'React.DOM'
+
+    if isJSXExtension or isJSXPragma
       if isJSXExtension and not isJSXPragma
         data = '/** @jsx React.DOM */' + data
       try
