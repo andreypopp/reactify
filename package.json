@@ -4,7 +4,7 @@
   "description": "browserify v2 plugin for react from Facebook to support jsx",
   "main": "lib/index.js",
   "dependencies": {
-    "react-tools": "~0.3.3",
+    "react-tools": "~0.4.0",
     "through": "~2.3.4"
   },
   "devDependencies": {
