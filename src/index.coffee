@@ -15,7 +15,7 @@ module.exports = (file) ->
 
   compile = ->
     isJSXExtension = isJSXExtensionRe.exec(file)
-    isJSXPragma = parsePragma(data).jsx == 'React.DOM'
+    isJSXPragma = parsePragma(data).jsx?
 
     if isJSXExtension or isJSXPragma
       if isJSXExtension and not isJSXPragma
