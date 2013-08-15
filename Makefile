@@ -1,17 +1,6 @@
 BIN = ./node_modules/.bin
-SRC = $(wildcard src/*.coffee)
-LIB = $(SRC:src/%.coffee=lib/%.js)
 REPO = $(shell cat .git/config | grep url | xargs echo | sed -E 's/^url = //g')
 REPONAME = $(shell echo $(REPO) | sed -E 's_.+:([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)\.git_\1/\2_')
-
-build: $(LIB)
-
-lib/%.js: src/%.coffee
-	@mkdir -p $(@D)
-	@$(BIN)/coffee -bcp $< > $@
-
-clean:
-	@rm -f $(LIB)
 
 install link:
 	@npm $@
@@ -36,13 +25,13 @@ docs-push::
 		git init && git add . && git ci -m 'docs' &&\
 		git push -f $(REPO) master:gh-pages)
 
-release-patch: build test
+release-patch: test
 	@$(call release,patch)
 
-release-minor: build test
+release-minor: test
 	@$(call release,minor)
 
-release-major: build test
+release-major: test
 	@$(call release,major)
 
 publish:
