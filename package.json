@@ -2,7 +2,7 @@
   "name": "reactify",
   "version": "0.2.2",
   "description": "browserify v2 plugin for react from Facebook to support jsx",
-  "main": "lib/index.js",
+  "main": "index.js",
   "dependencies": {
     "react-tools": "~0.4.1",
     "through": "~2.3.4"

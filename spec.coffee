@@ -1,6 +1,7 @@
 {ok} = require 'assert'
 browserify = require 'browserify'
-reactify = require './src/index'
+reactify = require './index'
+undoubted = require './undoubted'
 coffeeify = require 'coffeeify'
 
 describe 'reactify', ->
@@ -40,3 +41,10 @@ describe 'reactify', ->
       ok err
       ok not result
       done()
+
+  it 'works for *.js without pragma when we ask it so', (done) ->
+    browserify('./fixtures/main.jsnox').transform(undoubted)
+        .bundle (err, result) ->
+            ok not err
+            ok result
+            done()
