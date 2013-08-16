@@ -15,7 +15,7 @@ function process(file, isJSXFile) {
   }
 
   function compile() {
-    var e, isJSXExtension, isJSXPragma, transformed;
+    var isJSXExtension, isJSXPragma, transformed;
 
     isJSXPragma = parsePragma(data).jsx != null;
     if (isJSXFile || isJSXPragma) {
@@ -24,9 +24,8 @@ function process(file, isJSXFile) {
       }
       try {
         transformed = react.transform(data);
-      } catch (_error) {
-        e = _error;
-        this.emit('error', e);
+      } catch (error) {
+        this.emit('error', error);
       }
       this.queue(transformed);
     } else {
