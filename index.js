@@ -1,5 +1,6 @@
-var react = require('react-tools'),
-    docblock = require('react-tools/vendor/fbtransform/lib/docblock'),
+var jstransform = require('jstransform'),
+    visitors = require('react-tools/vendor/fbtransform/visitors').transformVisitors,
+    docblock = require('jstransform/src/docblock'),
     through = require('through');
 
 var isJSXExtensionRe = /^.+\.jsx$/;
@@ -23,7 +24,7 @@ function process(file, isJSXFile) {
         data = '/** @jsx React.DOM */' + data;
       }
       try {
-        transformed = react.transform(data);
+        transformed = jstransform.transform(visitors.react, data).code;
       } catch (error) {
         this.emit('error', error);
       }

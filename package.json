@@ -3,13 +3,16 @@
   "version": "0.3.1",
   "description": "browserify v2 plugin for react from Facebook to support jsx",
   "main": "index.js",
+  "peerDependencies": {
+    "react-tools": "0.5.x",
+    "browserify": "2.x.0"
+  },
   "dependencies": {
-    "react-tools": "~0.4.1",
+    "jstransform": "1.x.x",
     "through": "~2.3.4"
   },
   "devDependencies": {
     "coffee-script": "~1.6.2",
-    "browserify": "~2.17.0",
     "coffeeify": "~0.5.1",
     "mocha": "~1.9.0",
     "semver": "~1.1.4"
