@@ -1,6 +1,6 @@
 {
   "name": "reactify",
-  "version": "0.3.1",
+  "version": "0.4.0-alpha",
   "description": "browserify v2 plugin for react from Facebook to support jsx",
   "main": "index.js",
   "peerDependencies": {
