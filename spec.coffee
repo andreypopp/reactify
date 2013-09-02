@@ -44,7 +44,7 @@ describe 'reactify', ->
 
   it 'works for *.js without pragma when we ask it so', (done) ->
     browserify('./fixtures/main.jsnox').transform(undoubted)
-        .bundle (err, result) ->
-            ok not err
-            ok result
-            done()
+      .bundle (err, result) ->
+        ok not err
+        ok result
+        done()
