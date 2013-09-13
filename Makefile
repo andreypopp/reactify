@@ -6,24 +6,7 @@ install link:
 	@npm $@
 
 test:
-	@$(BIN)/mocha -b -R spec --compilers coffee:coffee-script ./spec.coffee
-
-docs::
-	@sphinx-npm \
-		-C -E -a \
-		-Dhtml_theme_path=. \
-		-Dhtml_theme=noisy \
-		-Dmaster_doc=index \
-		-Agithub_repo='$(REPONAME)' \
-		./docs ./docs/build
-
-docs-push::
-	rm -rf ./docs/build
-	$(MAKE) docs
-	touch ./docs/build/.nojekyll
-	(cd ./docs/build;\
-		git init && git add . && git ci -m 'docs' &&\
-		git push -f $(REPO) master:gh-pages)
+	@$(BIN)/mocha -b -R spec ./spec.js
 
 release-patch: test
 	@$(call release,patch)
