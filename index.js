@@ -23,10 +23,10 @@ function process(file, isJSXFile) {
       }
       try {
         var transformed = transform(data);
+        this.queue(transformed);
       } catch (error) {
         this.emit('error', error);
       }
-      this.queue(transformed);
     } else {
       this.queue(data);
     }
