@@ -15,15 +15,14 @@ function process(file, isJSXFile) {
   }
 
   function compile() {
-    var isJSXExtension, isJSXPragma, transformed;
+    var isJSXPragma = parsePragma(data).jsx != null;
 
-    isJSXPragma = parsePragma(data).jsx != null;
     if (isJSXFile || isJSXPragma) {
       if (!isJSXPragma) {
         data = '/** @jsx React.DOM */' + data;
       }
       try {
-        transformed = transform(data);
+        var transformed = transform(data);
       } catch (error) {
         this.emit('error', error);
       }
