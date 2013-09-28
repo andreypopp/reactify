@@ -25,7 +25,7 @@ function process(file, isJSXFile) {
       try {
         transformed = react.transform(data);
       } catch (error) {
-        this.emit('error', error);
+        this.emit('error', 'Error reactifying ' + file + ': ' + error);
       }
       this.queue(transformed);
     } else {
