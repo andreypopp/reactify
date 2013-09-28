@@ -25,7 +25,7 @@ function process(file, isJSXFile) {
         var transformed = transform(data);
         this.queue(transformed);
       } catch (error) {
-        this.emit('error', error);
+        this.emit('error', 'Error reactifying ' + file + ': ' + error);
       }
     } else {
       this.queue(data);
