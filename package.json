@@ -7,10 +7,14 @@
     "jstransform": "1.x.x",
     "through": "~2.3.4"
   },
+  "peerDependencies": {
+    "react-tools": ">= 0.5.x"
+  },
   "devDependencies": {
     "coffeeify": "~0.5.1",
     "mocha": "~1.9.0",
-    "semver": "~1.1.4"
+    "semver": "~1.1.4",
+    "browserify": "~2.34.1"
   },
   "repository": {
     "type": "git",
