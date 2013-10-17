@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "jstransform": "1.x.x",
+    "react-tools": "~0.4.1",
     "through": "~2.3.4"
   },
   "peerDependencies": {
