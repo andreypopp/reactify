@@ -2,7 +2,7 @@
 
 Basic usage is:
 
-    % browserify -t reactify main.jsx
+    % browserify -t reactify main.js
 
 `reactify` transform activates for files with either `.jsx` extension or `/**
 @jsx React.DOM */` pragma as a first line for any `.js` file. If you want it to

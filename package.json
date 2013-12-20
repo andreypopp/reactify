@@ -5,10 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "jstransform": "1.x.x",
-    "through": "~2.3.4"
-  },
-  "peerDependencies": {
-    "react-tools": ">= 0.5.x"
+    "through": "~2.3.4",
+    "react-tools": ">= 0.8.0"
   },
   "devDependencies": {
     "coffeeify": "~0.5.1",
