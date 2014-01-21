@@ -22,6 +22,7 @@
   "keywords": [
     "react",
     "browserify",
+    "browserify-transform",
     "v2",
     "jsx",
     "js",
