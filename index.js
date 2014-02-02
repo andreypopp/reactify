@@ -8,7 +8,9 @@ function parsePragma(data) {
   return docblock.parseAsObject(docblock.extract(data));
 }
 
-function process(file, isJSXFile) {
+function process(file, isJSXFile, transformer) {
+  transformer = transformer || transform;
+
   var data = '';
   function write(chunk) {
     return data += chunk;
@@ -40,3 +42,4 @@ module.exports = function(file) {
   return process(file, isJSXExtensionRe.exec(file));
 };
 module.exports.process = process;
+module.exports.isJSXExtensionRe = isJSXExtensionRe;
