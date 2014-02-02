@@ -24,7 +24,7 @@ function process(file, isJSXFile, transformer) {
         data = '/** @jsx React.DOM */' + data;
       }
       try {
-        var transformed = transform(data);
+        var transformed = transformer(data);
         this.queue(transformed);
       } catch (error) {
         this.emit('error', 'Error reactifying ' + file + ': ' + error);
