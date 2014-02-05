@@ -1,4 +1,5 @@
-[Browserify][] v2 transform for `text/jsx` (superset of JavaScript used in [React][] library).
+[Browserify][] transform for `text/jsx` (superset of JavaScript used in
+[React][] library).
 
 Basic usage is:
 
