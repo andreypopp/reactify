@@ -54,7 +54,7 @@ describe('reactify', function() {
 
   return it('works for *.js without pragma when we ask it so', function(done) {
     return browserify('./fixtures/main.jsnox')
-      .transform(undoubted)
+      .transform({extension: 'jsnox'}, reactify)
       .bundle(function(err, result) {
         ok(!err);
         ok(result);

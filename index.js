@@ -1,6 +1,6 @@
-var docblock = require('jstransform/src/docblock'),
-    transform = require('react-tools').transform,
-    through = require('through');
+var docblock  = require('jstransform/src/docblock');
+var transform = require('react-tools').transform;
+var through   = require('through');
 
 var isJSXExtensionRe = /^.+\.jsx$/;
 
@@ -38,8 +38,18 @@ function process(file, isJSXFile, transformer) {
   return through(write, compile);
 }
 
-module.exports = function(file) {
-  return process(file, isJSXExtensionRe.exec(file));
+function getExtensionsMatcher(extensions) {
+  return new RegExp('\.(' + extensions.join('|') + ')$');
+}
+
+module.exports = function(file, options) {
+  var extensions = ['jsx']
+    .concat(options.extension)
+    .concat(options.x)
+    .filter(Boolean)
+    .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
+  var isJSXFile = getExtensionsMatcher(extensions);
+  return process(file, isJSXFile);
 };
 module.exports.process = process;
 module.exports.isJSXExtensionRe = isJSXExtensionRe;
