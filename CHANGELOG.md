@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 0.8.0
+
+  * bump react-tools version to 0.9.0
+
+  * deprecate reactify/undoubted transform
+
+  * -x/--extension command line option to process files with specified extension
+
+## 0.7.0
+
+  * bump jstransform version
+
+## 0.6.1
+
+  * fix transform function override
+
+## 0.6.0
+
+  * allow transform function to be passed as an argument
+
+  * export isJSXExtension regexp
+
+## 0.5.1
+
+  * add "browserify-transform" keyword to package metadata
+
 ## 0.5.0
 
   * move react-tools from peer deps to deps, update to 0.8.0
