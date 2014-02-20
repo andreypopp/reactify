@@ -43,6 +43,7 @@ function getExtensionsMatcher(extensions) {
 }
 
 module.exports = function(file, options) {
+  options = options || {};
   var extensions = ['jsx']
     .concat(options.extension)
     .concat(options.x)
