@@ -49,7 +49,7 @@ module.exports = function(file, options) {
     .filter(Boolean)
     .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
   var isJSXFile = getExtensionsMatcher(extensions);
-  return process(file, isJSXFile);
+  return process(file, isJSXFile.exec(file));
 };
 module.exports.process = process;
 module.exports.isJSXExtensionRe = isJSXExtensionRe;
