@@ -1,12 +1,11 @@
 BIN = ./node_modules/.bin
-REPO = $(shell cat .git/config | grep url | xargs echo | sed -E 's/^url = //g')
-REPONAME = $(shell echo $(REPO) | sed -E 's_.+:([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)\.git_\1/\2_')
+PATH := $(BIN):$(PATH)
 
 install link:
 	@npm $@
 
 test:
-	@$(BIN)/mocha -b -R spec ./spec.js
+	@mocha -b -R spec ./spec.js
 
 release-patch: test
 	@$(call release,patch)
