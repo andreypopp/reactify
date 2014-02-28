@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.0
+
+  * bump jstransform to 0.9.0
+
 ## 0.8.0
 
   * bump react-tools version to 0.9.0
