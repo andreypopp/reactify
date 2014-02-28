@@ -1,3 +1,5 @@
+"use strict";
+
 var docblock  = require('jstransform/src/docblock');
 var transform = require('react-tools').transform;
 var through   = require('through');
@@ -17,6 +19,7 @@ function process(file, isJSXFile, transformer) {
   }
 
   function compile() {
+    // jshint -W040
     var isJSXPragma = parsePragma(data).jsx !== undefined;
 
     if (isJSXFile || isJSXPragma) {
@@ -33,13 +36,14 @@ function process(file, isJSXFile, transformer) {
       this.queue(data);
     }
     return this.queue(null);
+    // jshint +W040
   }
 
   return through(write, compile);
 }
 
 function getExtensionsMatcher(extensions) {
-  return new RegExp('\.(' + extensions.join('|') + ')$');
+  return new RegExp('\\.(' + extensions.join('|') + ')$');
 }
 
 module.exports = function(file, options) {
