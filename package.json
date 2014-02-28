@@ -12,7 +12,8 @@
     "coffeeify": "~0.x.x",
     "mocha": "~1.9.0",
     "semver": "~1.1.4",
-    "browserify": "3.x.x"
+    "browserify": "3.x.x",
+    "jshint": "^2.4.4"
   },
   "repository": {
     "type": "git",

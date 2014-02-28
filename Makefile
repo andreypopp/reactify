@@ -4,6 +4,9 @@ PATH := $(BIN):$(PATH)
 install link:
 	@npm $@
 
+lint:
+	@jshint index.js
+
 test:
 	@mocha -b -R spec ./spec.js
 

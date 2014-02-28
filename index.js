@@ -17,7 +17,7 @@ function process(file, isJSXFile, transformer) {
   }
 
   function compile() {
-    var isJSXPragma = parsePragma(data).jsx != null;
+    var isJSXPragma = parsePragma(data).jsx !== undefined;
 
     if (isJSXFile || isJSXPragma) {
       if (!isJSXPragma) {
