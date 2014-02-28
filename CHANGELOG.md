@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.1
+
+  * fix mathcing filename for extension
+
 ## 0.9.0
 
   * bump jstransform to 0.9.0
