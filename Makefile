@@ -1,5 +1,4 @@
-BIN = ./node_modules/.bin
-PATH := $(BIN):$(PATH)
+PATH := ./node_modules/.bin:$(PATH)
 
 install link:
 	@npm $@
@@ -7,8 +6,8 @@ install link:
 lint:
 	@jshint index.js
 
-test:
-	@mocha -b -R spec ./spec.js
+test::
+	@mocha -b -R spec ./test/*.js
 
 release-patch: test
 	@$(call release,patch)
