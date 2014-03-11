@@ -17,7 +17,7 @@ describe('reactify', function() {
   }
 
   it('works for *.js with pragma', function(done) {
-    return bundle('./fixtures/main.js', function(err, result) {
+    bundle('./fixtures/main.js', function(err, result) {
       assert(!err);
       assert(result);
       assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
@@ -26,7 +26,7 @@ describe('reactify', function() {
   });
 
   it('works for *.jsx', function(done) {
-    return bundle('./fixtures/main.jsx', function(err, result) {
+    bundle('./fixtures/main.jsx', function(err, result) {
       assert(!err);
       assert(result);
       assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
@@ -35,7 +35,7 @@ describe('reactify', function() {
   });
 
   it('works for plain *.js', function(done) {
-    return bundle('./fixtures/simple.js', function(err, result) {
+    bundle('./fixtures/simple.js', function(err, result) {
       assert(!err);
       assert(result);
       assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
@@ -44,7 +44,7 @@ describe('reactify', function() {
   });
 
   it('works for *.coffee', function(done) {
-    return bundle('./fixtures/coffee.coffee', function(err, result) {
+    bundle('./fixtures/coffee.coffee', function(err, result) {
       assert(!err);
       assert(result);
       assertContains(result, 'React.DOM.span( {class:"caret"})');
@@ -53,7 +53,7 @@ describe('reactify', function() {
   });
 
   it('returns error on invalid JSX', function(done) {
-    return bundle('./fixtures/invalid.js', function(err, result) {
+    bundle('./fixtures/invalid.js', function(err, result) {
       assert(err);
       assertContains(String(err), 'Parse Error: Line 6: Unexpected token');
       assert(!result);
@@ -61,8 +61,8 @@ describe('reactify', function() {
     });
   });
 
-  return it('works for *.js without pragma when we ask it so', function(done) {
-    return browserify('./fixtures/main.jsnox', {basedir: __dirname})
+  it('works for *.js without pragma when we ask it so', function(done) {
+    browserify('./fixtures/main.jsnox', {basedir: __dirname})
       .transform({extension: 'jsnox'}, reactify)
       .bundle(function(err, result) {
         assert(!err);
