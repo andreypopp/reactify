@@ -12,11 +12,16 @@ describe('reactify', function() {
       .bundle(cb);
   };
 
+  function assertContains(bundle, code) {
+    assert(bundle.indexOf(code) > -1, "bundle does not contain: " + code);
+  }
+
   it('works for *.js with pragma', function(done) {
     return bundle('./fixtures/main.js', function(err, result) {
       assert(!err);
       assert(result);
-      return done();
+      assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+      done();
     });
   });
 
@@ -24,7 +29,8 @@ describe('reactify', function() {
     return bundle('./fixtures/main.jsx', function(err, result) {
       assert(!err);
       assert(result);
-      return done();
+      assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+      done();
     });
   });
 
@@ -32,7 +38,8 @@ describe('reactify', function() {
     return bundle('./fixtures/simple.js', function(err, result) {
       assert(!err);
       assert(result);
-      return done();
+      assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+      done();
     });
   });
 
@@ -40,15 +47,17 @@ describe('reactify', function() {
     return bundle('./fixtures/coffee.coffee', function(err, result) {
       assert(!err);
       assert(result);
-      return done();
+      assertContains(result, 'React.DOM.span( {class:"caret"})');
+      done();
     });
   });
 
   it('returns error on invalid JSX', function(done) {
     return bundle('./fixtures/invalid.js', function(err, result) {
       assert(err);
+      assertContains(String(err), 'Parse Error: Line 6: Unexpected token');
       assert(!result);
-      return done();
+      done();
     });
   });
 
@@ -58,6 +67,7 @@ describe('reactify', function() {
       .bundle(function(err, result) {
         assert(!err);
         assert(result);
+        assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
         return done();
       });
   });
