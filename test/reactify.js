@@ -6,7 +6,7 @@ var reactify    = require('../index');
 describe('reactify', function() {
 
   function bundle(entry, cb) {
-    return b = browserify(entry, {basedir: __dirname})
+    return browserify(entry, {basedir: __dirname})
       .transform(coffeeify)
       .transform(reactify)
       .bundle(cb);
@@ -61,15 +61,67 @@ describe('reactify', function() {
     });
   });
 
-  it('works for *.js without pragma when we ask it so', function(done) {
-    browserify('./fixtures/main.jsnox', {basedir: __dirname})
-      .transform({extension: 'jsnox'}, reactify)
-      .bundle(function(err, result) {
-        assert(!err);
-        assert(result);
-        assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
-        return done();
-      });
+  describe('transforming files with extensions others than .js/.jsx', function() {
+
+    it('activates via extension option', function(done) {
+      browserify('./fixtures/main.jsnox', {basedir: __dirname})
+        .transform({extension: 'jsnox'}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+          done();
+        });
+    });
+
+    it('activates via x option', function(done) {
+      browserify('./fixtures/main.jsnox', {basedir: __dirname})
+        .transform({x: 'jsnox'}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+          done();
+        });
+    });
+
+    it('activates via everything option', function(done) {
+      browserify('./fixtures/main.jsnox', {basedir: __dirname})
+        .transform({everything: true}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+          done();
+        });
+    });
+
+  });
+
+  describe('transforming with es6 visitors', function() {
+
+    it('activates via es6 option', function(done) {
+      browserify('./fixtures/main.es6.jsx', {basedir: __dirname})
+        .transform({es6: true}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'var func = function(x)  {return React.DOM.div(null, x)');
+          done();
+        });
+    });
+
+    it('activates via harmony option', function(done) {
+      browserify('./fixtures/main.es6.jsx', {basedir: __dirname})
+        .transform({harmony: true}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'var func = function(x)  {return React.DOM.div(null, x)');
+          done();
+        });
+    });
+
   });
 
 });

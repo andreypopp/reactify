@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.10.0
+
+  * add support for `--es6/--harmony` option to compile a limited set of es6
+    into es5. Supported features are arrow functions, rest params, templates,
+    object short notation and classes.
+
+  * add support for `--everything` to apply transform to every module
+
 ## 0.9.1
 
   * fix mathcing filename for extension
