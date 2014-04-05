@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.11.0
+
+  * add support for `--visitors` to allow additional jstransform visitors to be
+    used for transformation.
+
 ## 0.10.0
 
   * add support for `--es6/--harmony` option to compile a limited set of es6

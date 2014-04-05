@@ -124,4 +124,19 @@ describe('reactify', function() {
 
   });
 
+  describe('transforming with custom visitors', function() {
+
+    it('activates via es6 option', function(done) {
+      browserify('./fixtures/main.es6-custom.jsx', {basedir: __dirname})
+        .transform({visitors: 'es6-module-jstransform/visitors'}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'var qs = require(\'querystring\');');
+          assertContains(result, 'return React.DOM.div(null);');
+          done();
+        });
+    });
+  });
+
 });

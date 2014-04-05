@@ -1,9 +1,10 @@
 "use strict";
 
-var docblock  = require('jstransform/src/docblock');
-var transform = require('jstransform').transform;
-var visitors  = require('react-tools/vendor/fbtransform/visitors');
-var through   = require('through');
+var docblock        = require('jstransform/src/docblock');
+var transform       = require('jstransform').transform;
+var reactTransform  = require('react-tools').transform;
+var visitors        = require('react-tools/vendor/fbtransform/visitors');
+var through         = require('through');
 
 var isJSXExtensionRe = /^.+\.jsx$/;
 
@@ -12,7 +13,7 @@ function parsePragma(data) {
 }
 
 function process(file, isJSXFile, transformer) {
-  transformer = transformer || transformJSX;
+  transformer = transformer || reactTransform;
 
   var data = '';
   function write(chunk) {
@@ -47,16 +48,6 @@ function getExtensionsMatcher(extensions) {
   return new RegExp('\\.(' + extensions.join('|') + ')$');
 }
 
-function transformJSX(source) {
-  var visitorList = visitors.transformVisitors.react;
-  return transform(visitorList, source).code;
-}
-
-function transformWithES6(source) {
-  var visitorList = visitors.getAllVisitors();
-  return transform(visitorList, source).code;
-}
-
 module.exports = function(file, options) {
   options = options || {};
 
@@ -76,11 +67,22 @@ module.exports = function(file, options) {
     isJSXFile = getExtensionsMatcher(extensions).exec(file);
   }
 
-  var transformFunc = options.harmony || options.es6 ?
-    transformWithES6 :
-    transformJSX;
+  var transformVisitors = [].concat(
+    options.harmony || options.es6 ?
+      visitors.getAllVisitors() :
+      visitors.transformVisitors.react);
 
-  return process(file, isJSXFile, transformFunc);
+  if (options.visitors) {
+    [].concat(options.visitors).forEach(function(id) {
+      transformVisitors = transformVisitors.concat(require(id).visitorList);
+    });
+  }
+
+  function transformer(source) {
+    return transform(transformVisitors, source).code;
+  }
+
+  return process(file, isJSXFile, transformer);
 };
 module.exports.process = process;
 module.exports.isJSXExtensionRe = isJSXExtensionRe;
