@@ -27,6 +27,19 @@ short notation and classes. You can activate this via `--es6` or `--harmony`
 boolean option:
 
     % browserify -t [ reactify --es6 ] main.js
+    
+You can also configure it in package.json
+
+```json
+{
+    "name": "my-package",
+    "browserify": {
+        "transform": [ 
+            ["reactify", {"es6": true}] 
+        ]
+    }
+}
+```
 
 ## Using 3rd-party jstransform visitors
 
