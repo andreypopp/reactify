@@ -74,7 +74,7 @@ module.exports = function(file, options) {
 
   if (options.visitors) {
     [].concat(options.visitors).forEach(function(id) {
-      transformVisitors = transformVisitors.concat(require(id).visitorList);
+      transformVisitors = require(id).visitorList.concat(transformVisitors);
     });
   }
 
