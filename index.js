@@ -33,6 +33,7 @@ function process(file, isJSXFile, transformer) {
         this.queue(transformed);
       } catch (error) {
         error.name = 'ReactifyError';
+        error.message = file + ': ' + error.message;
         error.fileName = file;
 
         this.emit('error', error);
