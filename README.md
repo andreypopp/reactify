@@ -1,9 +1,28 @@
 # reactify
 
 [Browserify][] transform for JSX (superset of JavaScript used in [React][]
-library).
+library):
 
-Basic usage is:
+    /**
+     * @jsx React.DOM
+     */
+
+    var React = require('react')
+
+    var Hello = React.createClass({
+
+      render: function() {
+        return <div>Hello, {this.props.name}!</div>
+      }
+    })
+
+    React.renderComponent(
+      <Hello name="World" />,
+      document.getElementById('hello')
+    )
+
+Save the snippet above as `main.js` and then produce a bundle with the following
+command:
 
     % browserify -t reactify main.js
 
@@ -27,15 +46,15 @@ short notation and classes. You can activate this via `--es6` or `--harmony`
 boolean option:
 
     % browserify -t [ reactify --es6 ] main.js
-    
+
 You can also configure it in package.json
 
 ```json
 {
     "name": "my-package",
     "browserify": {
-        "transform": [ 
-            ["reactify", {"es6": true}] 
+        "transform": [
+            ["reactify", {"es6": true}]
         ]
     }
 }
