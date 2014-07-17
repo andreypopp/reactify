@@ -70,15 +70,6 @@ can be composed together.
 Reactify provides `--visitors` option to specify additional jstransform visitos
 which could perform additional transformations.
 
-It should point to a module which exports `visitorList` attribute with a list of
-transformation functions to be applied:
-
-    % browserify -t [ reactify --visitors es6-module-jstransform/visitors ] main.js
-
-Example above uses [es6-module-jstransform][] to compile es6 module syntax
-(`import` and `export` declarations) into CommonJS module constructs.
-
 [Browserify]: http://browserify.org
 [React]: http://facebook.github.io/react/
 [jstransform]: https://github.com/facebook/jstransform
-[es6-module-jstransform]: https://github.com/andreypopp/es6-module-jstransform
