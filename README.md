@@ -67,7 +67,7 @@ transformations to be pluggable and, what's more important, composable. For
 example JSX and es6 are implemented as separate code transformations and still
 can be composed together.
 
-Reactify provides `--visitors` option to specify additional jstransform visitos
+Reactify provides `--visitors` option to specify additional jstransform visitors
 which could perform additional transformations.
 
 [Browserify]: http://browserify.org
