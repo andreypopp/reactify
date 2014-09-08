@@ -5,8 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "jstransform": "^6.0.1",
-    "through": "~2.3.4",
-    "react-tools": ">= 0.11.0"
+    "through": "~2.3.4"
   },
   "devDependencies": {
     "browserify": "4.x.x",
@@ -15,6 +14,9 @@
     "jshint": "^2.4.4",
     "mocha": "~1.9.0",
     "semver": "~1.1.4"
+  },
+  "peerDependencies": {
+    "react-tools": ">= 0.11.0"
   },
   "repository": {
     "type": "git",
