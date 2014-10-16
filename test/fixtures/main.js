@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 require('./main.jsx');
 
 React.renderComponent(
