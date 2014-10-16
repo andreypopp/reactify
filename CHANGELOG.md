@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 0.14.0
+
+  * bump dependencies versions
+
+  * remove deprecated features
+
+## 0.13.1
+
+  * bump dependencies jstransform dependency
+
+## 0.13.0
+
+  * include file path in error message.
+
 ## 0.11.0
 
   * add support for `--visitors` to allow additional jstransform visitors to be
