@@ -1,16 +1,11 @@
 "use strict";
 
-var docblock        = require('jstransform/src/docblock');
 var transform       = require('jstransform').transform;
 var reactTransform  = require('react-tools').transform;
 var visitors        = require('react-tools/vendor/fbtransform/visitors');
 var through         = require('through');
 
 var isJSXExtensionRe = /^.+\.jsx$/;
-
-function parsePragma(data) {
-  return docblock.parseAsObject(docblock.extract(data));
-}
 
 function process(file, isJSXFile, transformer) {
   transformer = transformer || reactTransform;
@@ -22,12 +17,7 @@ function process(file, isJSXFile, transformer) {
 
   function compile() {
     // jshint -W040
-    var isJSXPragma = parsePragma(data).jsx !== undefined;
-
-    if (isJSXFile || isJSXPragma) {
-      if (!isJSXPragma) {
-        data = '/** @jsx React.DOM */' + data;
-      }
+    if (isJSXFile) {
       try {
         var transformed = transformer(data);
         this.queue(transformed);
@@ -61,8 +51,7 @@ module.exports = function(file, options) {
 
     isJSXFile = true;
   } else {
-
-    var extensions = ['jsx']
+    var extensions = ['js', 'jsx']
       .concat(options.extension)
       .concat(options.x)
       .filter(Boolean)

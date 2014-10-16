@@ -3,10 +3,6 @@
 [Browserify][] transform for JSX (superset of JavaScript used in [React][]
 library):
 
-    /**
-     * @jsx React.DOM
-     */
-
     var React = require('react')
 
     var Hello = React.createClass({
@@ -26,8 +22,7 @@ command:
 
     % browserify -t reactify main.js
 
-`reactify` transform activates for files with either `.jsx` extension or `/**
-@jsx React.DOM */` pragma as a first line for any `.js` file.
+`reactify` transform activates for files with either `.js` or `.jsx` extensions.
 
 If you want to reactify modules with other extensions, pass an `-x /
 --extension` option:

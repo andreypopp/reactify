@@ -20,7 +20,7 @@ describe('reactify', function() {
     bundle('./fixtures/main.js', function(err, result) {
       assert(!err);
       assert(result);
-      assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+      assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
       done();
     });
   });
@@ -29,7 +29,7 @@ describe('reactify', function() {
     bundle('./fixtures/main.jsx', function(err, result) {
       assert(!err);
       assert(result);
-      assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+      assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
       done();
     });
   });
@@ -38,16 +38,7 @@ describe('reactify', function() {
     bundle('./fixtures/simple.js', function(err, result) {
       assert(!err);
       assert(result);
-      assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
-      done();
-    });
-  });
-
-  it('works for *.coffee', function(done) {
-    bundle('./fixtures/coffee.coffee', function(err, result) {
-      assert(!err);
-      assert(result);
-      assertContains(result, 'React.DOM.span({class: "caret"})');
+      assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
       done();
     });
   });
@@ -69,7 +60,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+          assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
           done();
         });
     });
@@ -80,7 +71,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+          assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
           done();
         });
     });
@@ -91,7 +82,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'React.DOM.h1(null, "Hello, world!")');
+          assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
           done();
         });
     });
@@ -106,7 +97,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'var func = function(x)  {return React.DOM.div(null, x)');
+          assertContains(result, 'var func = function(x)  {return React.createElement("div", null, x)');
           done();
         });
     });
@@ -117,7 +108,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'var func = function(x)  {return React.DOM.div(null, x)');
+          assertContains(result, 'var func = function(x)  {return React.createElement("div", null, x)');
           done();
         });
     });
@@ -133,7 +124,7 @@ describe('reactify', function() {
           assert(!err);
           assert(result);
           assertContains(result, 'var qs = require(\'querystring\');');
-          assertContains(result, 'return React.DOM.div(null);');
+          assertContains(result, 'return React.createElement("div", null);');
           done();
         });
     });
