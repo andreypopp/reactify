@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.15.0 (unreleased)
+## 0.15.0
 
   * transform now works without the `@jsx` pragma
 
