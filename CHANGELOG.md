@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.15.1
+
+  * Fix react-tools dependency
+
 ## 0.15.0
 
   * transform now works without the `@jsx` pragma
