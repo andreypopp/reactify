@@ -12,7 +12,7 @@ library):
       }
     })
 
-    React.renderComponent(
+    React.render(
       <Hello name="World" />,
       document.getElementById('hello')
     )
