@@ -47,7 +47,7 @@ describe('reactify', function() {
     bundle('./fixtures/coffee.coffee', function(err, result) {
       assert(!err);
       assert(result);
-      assertContains(result, 'React.DOM.span( {class:"caret"})');
+      assertContains(result, 'React.DOM.span({class: "caret"})');
       done();
     });
   });

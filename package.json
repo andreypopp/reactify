@@ -6,7 +6,7 @@
   "dependencies": {
     "jstransform": "^3.0.0",
     "through": "~2.3.4",
-    "react-tools": ">= 0.9.0"
+    "react-tools": ">= 0.9.0, < 0.12.0"
   },
   "devDependencies": {
     "coffeeify": "~0.x.x",
