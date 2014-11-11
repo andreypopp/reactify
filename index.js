@@ -71,8 +71,12 @@ module.exports = function(file, options) {
     });
   }
 
+  var transformOptions = {
+    es5: options.target === 'es5'
+  };
+
   function transformer(source) {
-    return transform(transformVisitors, source).code;
+    return transform(transformVisitors, source, transformOptions).code;
   }
 
   return process(file, isJSXFile, transformer);
