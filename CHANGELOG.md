@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.16.0
+
+  * Add `target` parameter to specify target runtime. The only allowed value is
+    `es5` at the moment.
+
 ## 0.15.1
 
   * Fix react-tools dependency
