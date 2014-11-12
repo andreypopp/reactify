@@ -52,7 +52,7 @@ describe('reactify', function() {
     });
   });
 
-  describe('transforming files with extensions others than .js/.jsx', function() {
+  describe('transforming files with extensions other than .js/.jsx', function() {
 
     it('activates via extension option', function(done) {
       browserify('./fixtures/main.jsnox', {basedir: __dirname})
@@ -115,9 +115,24 @@ describe('reactify', function() {
 
   });
 
+  describe('transforming with es5 as a target', function() {
+
+    it('activates via target option', function(done) {
+      browserify('./fixtures/main.es6-target-es5.jsx', {basedir: __dirname})
+        .transform({es6: true, target: 'es5'}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, ' Object.defineProperty(Foo.prototype,"bar",{enumerable:true,configurable:true,get:function() {"use strict";');
+          done();
+        });
+    });
+
+  });
+
   describe('transforming with custom visitors', function() {
 
-    it('activates via es6 option', function(done) {
+    it('activates via visitors option', function(done) {
       browserify('./fixtures/main.es6-custom.jsx', {basedir: __dirname})
         .transform({visitors: 'es6-module-jstransform/visitors'}, reactify)
         .bundle(function(err, result) {
