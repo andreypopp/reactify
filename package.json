@@ -1,10 +1,10 @@
 {
   "name": "reactify",
-  "version": "0.16.0",
+  "version": "0.17.0-dev",
   "description": "browserify v2 plugin for react from Facebook to support jsx",
   "main": "index.js",
   "dependencies": {
-    "jstransform": "^6.3.2",
+    "jstransform": "^8.0.0",
     "through": "~2.3.4",
     "react-tools": "~0.12.0"
   },

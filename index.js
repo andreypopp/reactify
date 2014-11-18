@@ -42,6 +42,8 @@ function getExtensionsMatcher(extensions) {
   return new RegExp('\\.(' + extensions.join('|') + ')$');
 }
 
+var VISITORS_OPTION_WARNED = false;
+
 module.exports = function(file, options) {
   options = options || {};
 
@@ -66,9 +68,21 @@ module.exports = function(file, options) {
       visitors.transformVisitors.react);
 
   if (options.visitors) {
+    if (!VISITORS_OPTION_WARNED) {
+      VISITORS_OPTION_WARNED = true;
+      console.warn(
+        'reactify: option "visitors" is deprecated ' +
+        'and will be removed in future releases'
+      );
+    }
     [].concat(options.visitors).forEach(function(id) {
       transformVisitors = require(id).visitorList.concat(transformVisitors);
     });
+  }
+
+  if (options['strip-types'] || options.stripTypes) {
+    var typeSyntax = require('jstransform/visitors/type-syntax');
+    transformVisitors = typeSyntax.visitorList.concat(transformVisitors);
   }
 
   var transformOptions = {
