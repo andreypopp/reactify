@@ -130,19 +130,30 @@ describe('reactify', function() {
 
   });
 
-  describe('transforming with custom visitors', function() {
+  describe('stripping types', function() {
 
-    it('activates via visitors option', function(done) {
-      browserify('./fixtures/main.es6-custom.jsx', {basedir: __dirname})
-        .transform({visitors: 'es6-module-jstransform/visitors'}, reactify)
+    it('activates via "strip-types" option', function(done) {
+      browserify('./fixtures/main.strip-types.js', {basedir: __dirname})
+        .transform({'strip-types': true}, reactify)
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'var qs = require(\'querystring\');');
-          assertContains(result, 'return React.createElement("div", null);');
+          assertContains(result, 'var x = 1;\n\nfunction y(param){\n  return 1;\n}');
           done();
         });
     });
+
+    it('activates via "stripTypes" option', function(done) {
+      browserify('./fixtures/main.strip-types.js', {basedir: __dirname})
+        .transform({stripTypes: true}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'var x = 1;\n\nfunction y(param){\n  return 1;\n}');
+          done();
+        });
+    });
+
   });
 
 });

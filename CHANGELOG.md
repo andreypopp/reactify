@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.17.0
+
+  * Add `--strip-types` option (command line) or `stripTypes` option (JS API) to
+    strip type declarations from source code.
+
+  * Deprecate `visitors` option. Custom visitors should be executed in a
+    separate browserify transform rather than in reactify.
+
 ## 0.16.0
 
   * Add `target` parameter to specify target runtime. The only allowed value is
