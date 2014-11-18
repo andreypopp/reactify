@@ -12,7 +12,13 @@ describe('reactify', function() {
       .bundle(cb);
   };
 
+  function normalizeWhitespace(src) {
+    return src.replace(/\n/g, '').replace(/ +/g, '');
+  }
+
   function assertContains(bundle, code) {
+    code = normalizeWhitespace(code);
+    bundle = normalizeWhitespace(bundle);
     assert(bundle.indexOf(code) > -1, "bundle does not contain: " + code);
   }
 
@@ -138,7 +144,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'var x = 1;\n\nfunction y(param){\n  return 1;\n}');
+          assertContains(result, 'var x = 1; function y(param) { return 1; }');
           done();
         });
     });
@@ -149,7 +155,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, 'var x = 1;\n\nfunction y(param){\n  return 1;\n}');
+          assertContains(result, 'var x = 1; function y(param) { return 1; }');
           done();
         });
     });
