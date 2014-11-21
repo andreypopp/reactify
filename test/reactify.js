@@ -162,4 +162,19 @@ describe('reactify', function() {
 
   });
 
+  describe('stripping types and transform with es6 visitors', function() {
+
+    it('activates via "stripTypes" and "es6" option', function(done) {
+      browserify('./fixtures/main.strip-types-es6.jsx', {basedir: __dirname})
+        .transform({stripTypes: true, es6: true}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, 'function Foo(){"use strict";}');
+          done();
+        });
+    });
+
+  });
+
 });
