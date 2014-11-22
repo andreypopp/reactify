@@ -3,6 +3,7 @@
 var transform       = require('jstransform').transform;
 var reactTransform  = require('react-tools').transform;
 var visitors        = require('react-tools/vendor/fbtransform/visitors');
+var typeSyntax      = require('jstransform/visitors/type-syntax');
 var through         = require('through');
 
 var isJSXExtensionRe = /^.+\.jsx$/;
@@ -80,16 +81,16 @@ module.exports = function(file, options) {
     });
   }
 
-  if (options['strip-types'] || options.stripTypes) {
-    var typeSyntax = require('jstransform/visitors/type-syntax');
-    transformVisitors = typeSyntax.visitorList.concat(transformVisitors);
-  }
-
   var transformOptions = {
     es5: options.target === 'es5'
   };
 
   function transformer(source) {
+    // Stripping types needs to happen before the other transforms
+    if (options['strip-types'] || options.stripTypes) {
+      source = transform(typeSyntax.visitorList, source, transformOptions).code;
+    }
+
     return transform(transformVisitors, source, transformOptions).code;
   }
 
