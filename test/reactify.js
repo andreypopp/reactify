@@ -9,7 +9,7 @@ describe('reactify', function() {
     return browserify(entry, {basedir: __dirname})
       .transform(coffeeify)
       .transform(reactify)
-      .bundle(cb);
+      .bundle({debug: true}, cb);
   };
 
   function normalizeWhitespace(src) {
@@ -54,6 +54,15 @@ describe('reactify', function() {
       assert(err);
       assertContains(String(err), 'Parse Error: Line 6: Unexpected token');
       assert(!result);
+      done();
+    });
+  });
+
+  it('includes embedded source map', function(done) {
+    bundle('./fixtures/main.jsx', function(err, result) {
+      assert(!err);
+      assert(result);
+      assertContains(result, '//# sourceMappingURL=data:application/json;base64');
       done();
     });
   });
