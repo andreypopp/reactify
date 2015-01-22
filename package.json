@@ -1,6 +1,6 @@
 {
   "name": "reactify",
-  "version": "0.17.1",
+  "version": "1.0.0",
   "description": "Browserify transform for JSX (a superset of JS used by React.js)",
   "main": "index.js",
   "dependencies": {
