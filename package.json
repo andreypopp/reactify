@@ -4,7 +4,6 @@
   "description": "Browserify transform for JSX (a superset of JS used by React.js)",
   "main": "index.js",
   "dependencies": {
-    "jstransform": "^8.0.0",
     "through": "~2.3.4",
     "react-tools": "~0.12.1"
   },
@@ -25,7 +24,6 @@
     "react",
     "browserify",
     "browserify-transform",
-    "v2",
     "jsx",
     "js",
     "plugin",
