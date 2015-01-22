@@ -1,36 +1,40 @@
+/**
+ * Reactify — a Browserify transform for JSX (a superset of JS used by React.js)
+ */
 "use strict";
 
-var transform       = require('jstransform').transform;
-var reactTransform  = require('react-tools').transform;
-var visitors        = require('react-tools/vendor/fbtransform/visitors');
-var typeSyntax      = require('jstransform/visitors/type-syntax');
-var through         = require('through');
+var ReactTools = require('react-tools');
+var through    = require('through');
 
-var isJSXExtensionRe = /^.+\.jsx$/;
+function reactify(filename, options) {
+  options = options || {};
 
-function process(file, isJSXFile, transformer) {
-  transformer = transformer || reactTransform;
+  var source = '';
 
-  var data = '';
   function write(chunk) {
-    return data += chunk;
+    return source += chunk;
   }
 
   function compile() {
     // jshint -W040
-    if (isJSXFile) {
+    if (isJSXFile(filename, options)) {
       try {
-        var transformed = transformer(data);
-        this.queue(transformed);
+        var output = ReactTools.transform(source, {
+          es5: options.target === 'es5',
+          sourceMap: true,
+          sourceFilename: filename,
+          stripTypes: options['strip-types'] || options.stripTypes,
+          harmony: options.harmony || options.es6
+        });
+        this.queue(output);
       } catch (error) {
         error.name = 'ReactifyError';
-        error.message = file + ': ' + error.message;
-        error.fileName = file;
-
+        error.message = filename + ': ' + error.message;
+        error.fileName = filename;
         this.emit('error', error);
       }
     } else {
-      this.queue(data);
+      this.queue(source);
     }
     return this.queue(null);
     // jshint +W040
@@ -39,74 +43,17 @@ function process(file, isJSXFile, transformer) {
   return through(write, compile);
 }
 
-function getExtensionsMatcher(extensions) {
-  return new RegExp('\\.(' + extensions.join('|') + ')$');
-}
-
-function inlineSourceMap(sourceMap, sourceCode, sourceFilename) {
-  var json = sourceMap.toJSON();
-  json.sources = [sourceFilename];
-  json.sourcesContent = [sourceCode];
-  var base64 = Buffer(JSON.stringify(json)).toString('base64');
-  return '//# sourceMappingURL=data:application/json;base64,' + base64;
-}
-
-var VISITORS_OPTION_WARNED = false;
-
-module.exports = function(file, options) {
-  options = options || {};
-
-  var isJSXFile;
-
+function isJSXFile(filename, options) {
   if (options.everything) {
-
-    isJSXFile = true;
+    return true;
   } else {
     var extensions = ['js', 'jsx']
       .concat(options.extension)
       .concat(options.x)
       .filter(Boolean)
       .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
-
-    isJSXFile = getExtensionsMatcher(extensions).exec(file);
+    return new RegExp('\\.(' + extensions.join('|') + ')$').exec(filename);
   }
+}
 
-  var transformVisitors = [].concat(
-    options.harmony || options.es6 ?
-      visitors.getAllVisitors() :
-      visitors.transformVisitors.react);
-
-  if (options.visitors) {
-    if (!VISITORS_OPTION_WARNED) {
-      VISITORS_OPTION_WARNED = true;
-      console.warn(
-        'reactify: option "visitors" is deprecated ' +
-        'and will be removed in future releases'
-      );
-    }
-    [].concat(options.visitors).forEach(function(id) {
-      transformVisitors = require(id).visitorList.concat(transformVisitors);
-    });
-  }
-
-  var transformOptions = {
-    es5: options.target === 'es5',
-    sourceMap: true
-  };
-
-  function transformer(source) {
-    // Stripping types needs to happen before the other transforms
-    if (options['strip-types'] || options.stripTypes) {
-      source = transform(typeSyntax.visitorList, source, transformOptions).code;
-    }
-
-    var output    = transform(transformVisitors, source, transformOptions),
-        sourceMap = inlineSourceMap(output.sourceMap, source, file);
-
-    return output.code + '\n' + sourceMap;
-  }
-
-  return process(file, isJSXFile, transformer);
-};
-module.exports.process = process;
-module.exports.isJSXExtensionRe = isJSXExtensionRe;
+module.exports = reactify;
