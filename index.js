@@ -43,6 +43,14 @@ function getExtensionsMatcher(extensions) {
   return new RegExp('\\.(' + extensions.join('|') + ')$');
 }
 
+function inlineSourceMap(sourceMap, sourceCode, sourceFilename) {
+  var json = sourceMap.toJSON();
+  json.sources = [sourceFilename];
+  json.sourcesContent = [sourceCode];
+  var base64 = Buffer(JSON.stringify(json)).toString('base64');
+  return '//# sourceMappingURL=data:application/json;base64,' + base64;
+}
+
 var VISITORS_OPTION_WARNED = false;
 
 module.exports = function(file, options) {
@@ -82,7 +90,8 @@ module.exports = function(file, options) {
   }
 
   var transformOptions = {
-    es5: options.target === 'es5'
+    es5: options.target === 'es5',
+    sourceMap: true
   };
 
   function transformer(source) {
@@ -91,7 +100,10 @@ module.exports = function(file, options) {
       source = transform(typeSyntax.visitorList, source, transformOptions).code;
     }
 
-    return transform(transformVisitors, source, transformOptions).code;
+    var output    = transform(transformVisitors, source, transformOptions),
+        sourceMap = inlineSourceMap(output.sourceMap, source, file);
+
+    return output.code + '\n' + sourceMap;
   }
 
   return process(file, isJSXFile, transformer);
