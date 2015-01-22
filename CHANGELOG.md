@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.0
+
+  * Add source maps support.
+  * Remove deprecated `visitors` option.
+  * Remove previously exposed `process` function (wasn't documented).
+
 ## 0.17.0
 
   * Add `--strip-types` option (command line) or `stripTypes` option (JS API) to
