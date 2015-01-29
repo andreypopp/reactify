@@ -5,17 +5,12 @@ library):
 
     var React = require('react')
 
-    var Hello = React.createClass({
+    class Hello extends React.Component {
 
-      render: function() {
+      render() {
         return <div>Hello, {this.props.name}!</div>
       }
-    })
-
-    React.render(
-      <Hello name="World" />,
-      document.getElementById('hello')
-    )
+    }
 
 Save the snippet above as `main.js` and then produce a bundle with the following
 command:
