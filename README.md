@@ -59,16 +59,5 @@ You can also configure it in package.json
 }
 ```
 
-## Using 3rd-party jstransform visitors
-
-Reactify uses [jstransform][] to transform JavaScript code. It allows code
-transformations to be pluggable and, what's more important, composable. For
-example JSX and es6 are implemented as separate code transformations and still
-can be composed together.
-
-Reactify provides `--visitors` option to specify additional jstransform visitors
-which could perform additional transformations.
-
 [Browserify]: http://browserify.org
 [React]: http://facebook.github.io/react/
-[jstransform]: https://github.com/facebook/jstransform
