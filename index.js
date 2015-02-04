@@ -15,21 +15,15 @@ function reactify(filename, options) {
     return source += chunk;
   }
 
-  var showSourceMaps = true;
-  if ('no-source-maps' in options) { // CLI
-      showSourceMaps = false;
-  }
-  if ('sourceMap' in options) { // API
-      showSourceMaps = options.sourceMap;
-  }
-
   function compile() {
     // jshint -W040
     if (isJSXFile(filename, options)) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
-          sourceMap: ('sourceMap' in options ? options.sourceMap : true),
+          sourceMap: 'source-map' in options ? options['source-map'] : (
+                     'sourceMap'  in options ? options.sourceMap :
+                     true),
           sourceFilename: filename,
           stripTypes: options['strip-types'] || options.stripTypes,
           harmony: options.harmony || options.es6
