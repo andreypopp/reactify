@@ -15,6 +15,14 @@ function reactify(filename, options) {
     return source += chunk;
   }
 
+  var showSourceMaps = true;
+  if ('no-source-maps' in options) { // CLI
+      showSourceMaps = false;
+  }
+  if ('sourceMap' in options) { // API
+      showSourceMaps = options.sourceMap;
+  }
+
   function compile() {
     // jshint -W040
     if (isJSXFile(filename, options)) {
