@@ -72,21 +72,7 @@ describe('reactify', function() {
     });
   });
 
-  it('supplies absolute paths for source-mapped files by default', function(done) {
-    bundle('./fixtures/main.jsx', function(err, result) {
-      assert(!err);
-      assert(result);
-      result = sourceMapsRegex.exec(result);
-      assert(result);
-      assert(result[1]);
-      var sourceMap = new Buffer(result[1], 'base64').toString('ascii');
-      var fullPath = path.join(__dirname, 'fixtures/main.jsx').replace(/\\/g, '\\\\');
-      assertContains(sourceMap, fullPath);
-      done();
-    });
-  });
-
-  it('strips cwd() from source-mapped paths when relative-paths is true', function(done) {
+  it('strips cwd() from source-mapped paths', function(done) {
     browserify('./fixtures/main.jsx', {basedir: __dirname})
       .transform({"relative-source-maps": true}, reactify)
       .bundle({debug: true}, function(err, result) {
@@ -102,7 +88,7 @@ describe('reactify', function() {
       });
   });
 
-  it('strips basedir from source-mapped paths when provided, and relative-paths is true', function(done) {
+  it('strips basedir from source-mapped paths when provided', function(done) {
     browserify('./fixtures/main.jsx', {basedir: __dirname})
       .transform({"relative-source-maps": true, "basedir": path.join(__dirname, 'test')}, reactify)
       .bundle({debug: true}, function(err, result) {

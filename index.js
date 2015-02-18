@@ -17,16 +17,13 @@ function reactify(filename, options) {
   }
 
   function compile() {
-    var baseDir = options['basedir'] || process.cwd();
-    var relative = !!(options['relative-source-maps']);
-    // jshint -W040
+    var baseDir = options.basedir || process.cwd();
     if (isJSXFile(filename, options)) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
           sourceMap: true,
-          sourceFilename: relative ? 
-            path.relative(baseDir, filename) : filename,
+          sourceFilename: path.relative(baseDir, filename),
           stripTypes: options['strip-types'] || options.stripTypes,
           harmony: options.harmony || options.es6
         });
