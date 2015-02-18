@@ -13,7 +13,7 @@ describe('reactify', function() {
   };
 
   function normalizeWhitespace(src) {
-    return src.replace(/\n/g, '').replace(/ +/g, '');
+    return src.replace(/\n/g, '').replace(/\r/g, '').replace(/ +/g, '');
   }
 
   function assertContains(bundle, code) {
