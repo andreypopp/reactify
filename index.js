@@ -10,6 +10,7 @@ function reactify(filename, options) {
   options = options || {};
 
   var source = '';
+  var additionalTransforms = options.additionalTransforms || [];
 
   function write(chunk) {
     return source += chunk;
@@ -19,6 +20,9 @@ function reactify(filename, options) {
     // jshint -W040
     if (isJSXFile(filename, options)) {
       try {
+        source = additionalTransforms.reduce(function (source, transformer) {
+          return transformer(source);
+        }, source);
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
           sourceMap: true,
