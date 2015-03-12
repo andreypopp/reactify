@@ -138,7 +138,7 @@ describe('reactify', function() {
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
-          assertContains(result, ' Object.defineProperty(Foo.prototype,"bar",{enumerable:true,configurable:true,get:function() {"use strict";');
+          assertContains(result, ' Object.defineProperty(Foo.prototype,"bar",{configurable:true,get:function() {"use strict";');
           done();
         });
     });

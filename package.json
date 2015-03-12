@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "through": "~2.3.4",
-    "react-tools": "~0.12.1"
+    "react-tools": "~0.13.0"
   },
   "devDependencies": {
     "browserify": "4.x.x",
