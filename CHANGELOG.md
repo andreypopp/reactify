@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.0
+
+  * Bump react-tools to 0.13.0.
+
 ## 1.0.0
 
   * Add source maps support.
