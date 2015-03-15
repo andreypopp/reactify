@@ -20,7 +20,7 @@ function reactify(filename, options) {
     if (isJSXFile(filename, options)) {
       try {
         var output = ReactTools.transform(source, {
-          es5: options.target === 'es5',
+          target: options.target,
           sourceMap: true,
           sourceFilename: filename,
           stripTypes: options['strip-types'] || options.stripTypes,
