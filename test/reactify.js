@@ -1,7 +1,12 @@
+/*jshint node: true*/
+"use strict";
 var assert      = require('assert');
 var browserify  = require('browserify');
 var coffeeify   = require('coffeeify');
 var reactify    = require('../index');
+var path        = require("path");
+
+var sourceMapsRegex = /\/\/# sourceMappingURL=data:application\/json;base64,([a-zA-Z0-9+\/=]+)/;
 
 describe('reactify', function() {
 
@@ -65,6 +70,38 @@ describe('reactify', function() {
       assertContains(result, '//# sourceMappingURL=data:application/json;base64');
       done();
     });
+  });
+
+  it('strips cwd() from source-mapped paths', function(done) {
+    browserify('./fixtures/main.jsx', {basedir: __dirname})
+      .transform({"relative-source-maps": true}, reactify)
+      .bundle({debug: true}, function(err, result) {
+        assert(!err);
+        assert(result);
+        result = sourceMapsRegex.exec(result);
+        assert(result);
+        assert(result[1]);
+        var sourceMap = new Buffer(result[1], 'base64').toString('ascii');
+        var fullPath = '"' + path.normalize('test/fixtures/main.jsx').replace(/\\/g, '\\\\') + '"';
+        assertContains(sourceMap, fullPath);
+        done();
+      });
+  });
+
+  it('strips basedir from source-mapped paths when provided', function(done) {
+    browserify('./fixtures/main.jsx', {basedir: __dirname})
+      .transform({"relative-source-maps": true, "basedir": path.join(__dirname, 'test')}, reactify)
+      .bundle({debug: true}, function(err, result) {
+        assert(!err);
+        assert(result);
+        result = sourceMapsRegex.exec(result);
+        assert(result);
+        assert(result[1]);
+        var sourceMap = new Buffer(result[1], 'base64').toString('ascii');
+        var fullPath = '"' + path.normalize('../fixtures/main.jsx').replace(/\\/g, '\\\\') + '"';
+        assertContains(sourceMap, fullPath);
+        done();
+      });
   });
 
   describe('transforming files with extensions other than .js/.jsx', function() {

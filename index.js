@@ -5,6 +5,7 @@
 
 var ReactTools = require('react-tools');
 var through    = require('through');
+var path = require("path");
 
 function reactify(filename, options) {
   options = options || {};
@@ -16,13 +17,13 @@ function reactify(filename, options) {
   }
 
   function compile() {
-    // jshint -W040
+    var baseDir = options.basedir || process.cwd();
     if (isJSXFile(filename, options)) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
           sourceMap: true,
-          sourceFilename: filename,
+          sourceFilename: path.relative(baseDir, filename),
           stripTypes: options['strip-types'] || options.stripTypes,
           harmony: options.harmony || options.es6
         });
