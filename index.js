@@ -19,13 +19,7 @@ function reactify(filename, options) {
     // jshint -W040
     if (isJSXFile(filename, options)) {
       try {
-        var output = ReactTools.transform(source, {
-          es5: options.target === 'es5',
-          sourceMap: true,
-          sourceFilename: filename,
-          stripTypes: options['strip-types'] || options.stripTypes,
-          harmony: options.harmony || options.es6
-        });
+        var output = ReactTools.transform(source, getTransformOptions(options, filename));
         this.queue(output);
       } catch (error) {
         error.name = 'ReactifyError';
@@ -54,6 +48,25 @@ function isJSXFile(filename, options) {
       .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
     return new RegExp('\\.(' + extensions.join('|') + ')$').exec(filename);
   }
+}
+
+function getTransformOptions(options, filename) {
+  var out = {
+    es5: options.target === 'es5',
+    sourceMap: true,
+    sourceFilename: filename,
+    stripTypes: options['strip-types'] || options.stripTypes,
+    harmony: options.harmony || options.es6
+  }
+
+  var reactOpts = options.reactOptions;
+  if (reactOpts) {
+    for (var k in reactOpts) {
+      out[k] = reactOpts[k];
+    }
+  }
+
+  return out;
 }
 
 module.exports = reactify;

@@ -169,6 +169,17 @@ describe('reactify', function() {
         });
     });
 
+    it('strips import types with es6modules option', function(done) {
+      browserify('./fixtures/main.strip-import-types.js', {basedir: __dirname})
+        .transform({stripTypes: true, reactOptions: {es6module: true}}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assert(result.indexOf('import') == -1, "'import type' statement was not removed.");
+          done();
+        });
+    });
+
   });
 
   describe('stripping types and transform with es6 visitors', function() {
