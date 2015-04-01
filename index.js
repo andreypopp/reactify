@@ -8,6 +8,7 @@ var through    = require('through');
 
 function reactify(filename, options) {
   options = options || {};
+  options.extensions = options.hasOwnProperty('extensions') ? options.extensions : [ '.jsx' ];
 
   var source = '';
 
@@ -17,7 +18,7 @@ function reactify(filename, options) {
 
   function compile() {
     // jshint -W040
-    if (isJSXFile(filename, options)) {
+    if (needsTransform(filename, options)) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
@@ -43,16 +44,20 @@ function reactify(filename, options) {
   return through(write, compile);
 }
 
-function isJSXFile(filename, options) {
+function endsWith(str, suffix) {
+  return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function needsTransform(filename, options) {
   if (options.everything) {
     return true;
   } else {
-    var extensions = ['js', 'jsx']
-      .concat(options.extension)
-      .concat(options.x)
-      .filter(Boolean)
-      .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
-    return new RegExp('\\.(' + extensions.join('|') + ')$').exec(filename);
+    for (var i = 0; i < options.extensions.length; i++) {
+      if (endsWith(filename, options.extensions[i])) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
