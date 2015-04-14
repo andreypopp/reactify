@@ -19,6 +19,10 @@ command:
 
 `reactify` transform activates for files with either `.js` or `.jsx` extensions.
 
+Some modules you might want to require won't work because of the way browserify applies transforms. In this case, use a -g rather than a -t to employ reactify.
+
+    % browserify -g reactify main.js
+
 If you want to reactify modules with other extensions, pass an `-x /
 --extension` option:
 
