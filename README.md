@@ -19,10 +19,6 @@ command:
 
 `reactify` transform activates for files with either `.js` or `.jsx` extensions.
 
-Some modules you might want to require won't work because of the way browserify applies transforms. In this case, use a -g rather than a -t to employ reactify.
-
-    % browserify -g reactify main.js
-
 If you want to reactify modules with other extensions, pass an `-x /
 --extension` option:
 
@@ -57,6 +53,29 @@ You can also configure it in package.json
     }
 }
 ```
+
+## Troubleshooting
+
+### Code in 3rd-party packages isn't being transformed by reactify
+
+By default Browserify applies transforms only for modules in the current package. That means that if there are modules with JSX in packages in `node_modules/` directory then browserify will throw SyntaxError left and right even if you are using reactify.
+
+The best way to fix that is ask package author to publish to npm with code compiled down to plain ES5 which is runnable in browsers and Node.js as-is.
+
+Another approach is to ask to add
+```
+"browserify": {
+  "transform": ["reactify"]
+}
+```
+to the package's `package.json`. That will make Browserify apply reactify transform for that package too.
+
+Another way is to activate reactify with `-g` option which will instruct Browserify to apply reactify to every module it encounters:
+```
+% browserify -g reactify main.js
+```
+Note that this will lead to slower builds as every module will be parsed and transformed by reactify even if it doesn't have JSX code in it. 
+
 
 [Browserify]: http://browserify.org
 [React]: http://facebook.github.io/react/
