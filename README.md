@@ -24,6 +24,10 @@ If you want to reactify modules with other extensions, pass an `-x /
 
     % browserify -t coffeeify -t [ reactify --extension coffee ] main.coffee
 
+If you want to specify your own extensions, pass an `--extensions` option:
+
+    % browserify -t [ reactify --extensions jsx,coffee ] main.jsx
+
 If you don't want to specify extension, just pass `--everything` option:
 
     % browserify -t coffeeify -t [ reactify --everything ] main.coffee
