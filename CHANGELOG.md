@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+
+  * Correctly handle streams with multibyte characters inside (#67 by @uggedal)
+
 ## 1.1.0
 
   * Bump react-tools to 0.13.0.
