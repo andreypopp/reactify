@@ -9,13 +9,17 @@ var through    = require('through');
 function reactify(filename, options) {
   options = options || {};
 
-  var source = '';
+  var buf = [];
 
   function write(chunk) {
-    return source += chunk;
+    if (!Buffer.isBuffer(chunk)) {
+      chunk = new Buffer(chunk)
+    }
+    return buf.push(chunk)
   }
 
   function compile() {
+    var source = Buffer.concat(buf).toString();
     // jshint -W040
     if (isJSXFile(filename, options)) {
       try {
