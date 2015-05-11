@@ -2,6 +2,8 @@ var assert      = require('assert');
 var browserify  = require('browserify');
 var coffeeify   = require('coffeeify');
 var reactify    = require('../index');
+var concat      = require('concat-stream');
+var fs          = require('fs');
 
 describe('reactify', function() {
 
@@ -65,6 +67,17 @@ describe('reactify', function() {
       assertContains(result, '//# sourceMappingURL=data:application/json;base64');
       done();
     });
+  });
+
+  it('handles utf-8 encoded input correctly', function(done) {
+    fs.createReadStream(__dirname + '/fixtures/utf8.js')
+      .pipe(reactify(''))
+      .pipe(concat(function(result) {
+        for (var i = 0; i < result.length; i++) {
+          assert(result.charAt(i) === 'å' || result.charAt(i) === '\n');
+        }
+        done();
+    }));
   });
 
   describe('transforming files with extensions other than .js/.jsx', function() {
