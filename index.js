@@ -5,6 +5,8 @@
 
 var ReactTools = require('react-tools');
 var through    = require('through');
+var minimatch  = require('minimatch');
+var flatten    = require('flatten');
 
 function reactify(filename, options) {
   options = options || {};
@@ -48,6 +50,12 @@ function reactify(filename, options) {
 }
 
 function isJSXFile(filename, options) {
+  if (options.exclude && flatten([options.exclude]).some(function (pattern) {
+    return minimatch(filename, pattern, { matchBase: true });
+  })) {
+    return false;
+  }
+
   if (options.everything) {
     return true;
   } else {
