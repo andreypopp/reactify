@@ -21,8 +21,7 @@ function reactify(filename, options) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
-          sourceMap: isDefined(options['source-map']) || isDefined(options.sourceMap) ?
-              !!options['source-map'] || !!options.sourceMap : true,
+          sourceMap: options.sourceMap !== false && options['source-map'] !== false,
           sourceFilename: filename,
           stripTypes: options['strip-types'] || options.stripTypes,
           harmony: options.harmony || options.es6
@@ -55,10 +54,6 @@ function isJSXFile(filename, options) {
       .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
     return new RegExp('\\.(' + extensions.join('|') + ')$').exec(filename);
   }
-}
-
-function isDefined(value) {
-  return typeof value !== 'undefined';
 }
 
 module.exports = reactify;
