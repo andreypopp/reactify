@@ -6,7 +6,7 @@
 var ReactTools = require('react-tools');
 var through    = require('through');
 var minimatch  = require('minimatch');
-var path       = require('path')
+var path       = require('path');
 
 function reactify(filename, options) {
   options = options || {};
@@ -51,7 +51,9 @@ function reactify(filename, options) {
 }
 
 function isJSXFile(filename, exclude, options) {
-  var relativeName = path.relative(process.cwd(), filename);
+  // Getting base dir from own options, browserify options or from current working dir
+  var baseDir = options.basedir || (options._flags && options._flags.basedir) || process.cwd();
+  var relativeName = path.relative(baseDir, filename);
 
   if (exclude.some(function(matcher) {
     return matcher.match(relativeName);
