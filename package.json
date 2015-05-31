@@ -6,8 +6,7 @@
   "dependencies": {
     "through": "~2.3.4",
     "react-tools": "~0.13.0",
-    "flatten": "0.0.1",
-    "minimatch": "^2.0.8"
+    "minimatch": "~2.0.8"
   },
   "devDependencies": {
     "browserify": "4.x.x",
