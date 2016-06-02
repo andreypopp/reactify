@@ -51,7 +51,7 @@ function isJSXFile(filename, options) {
   if (options.everything) {
     return true;
   } else {
-    var extensions = ['js', 'jsx']
+    var extensions = (options.extensions) ? options.extensions.split(',') : ['js', 'jsx']
       .concat(options.extension)
       .concat(options.x)
       .filter(Boolean)
