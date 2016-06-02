@@ -5,10 +5,13 @@
 
 var ReactTools = require('react-tools');
 var through    = require('through');
+var minimatch  = require('minimatch');
+var path       = require('path');
 
 function reactify(filename, options) {
   options = options || {};
 
+  var exclude = computeExcluded(options.exclude);
   var buf = [];
 
   function write(chunk) {
@@ -21,7 +24,7 @@ function reactify(filename, options) {
   function compile() {
     var source = Buffer.concat(buf).toString();
     // jshint -W040
-    if (isJSXFile(filename, options)) {
+    if (isJSXFile(filename, exclude, options)) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
@@ -47,7 +50,17 @@ function reactify(filename, options) {
   return through(write, compile);
 }
 
-function isJSXFile(filename, options) {
+function isJSXFile(filename, exclude, options) {
+  // Getting base dir from own options, browserify options or from current working dir
+  var baseDir = options.basedir || (options._flags && options._flags.basedir) || process.cwd();
+  var relativeName = path.relative(baseDir, filename);
+
+  if (exclude.some(function(matcher) {
+    return matcher.match(relativeName);
+  })) {
+    return false;
+  }
+
   if (options.everything) {
     return true;
   } else {
@@ -58,6 +71,16 @@ function isJSXFile(filename, options) {
       .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
     return new RegExp('\\.(' + extensions.join('|') + ')$').exec(filename);
   }
+}
+
+function computeExcluded(excluded) {
+  if (!excluded) {
+    return [];
+  }
+
+  return (Array.isArray(excluded) ? excluded : [excluded]).map(function (pattern) {
+    return minimatch.Minimatch(pattern);
+  });
 }
 
 module.exports = reactify;
