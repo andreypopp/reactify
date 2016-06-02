@@ -1,5 +1,7 @@
 # reactify
 
+**DEPRECATED:** Use [babelify](https://github.com/babel/babelify) instead (make sure you configured Babel with babel-preset-react).
+
 [Browserify][] transform for JSX (superset of JavaScript used in [React][]
 library):
 
