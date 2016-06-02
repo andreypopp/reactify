@@ -56,6 +56,27 @@ You can also configure it in package.json
 }
 ```
 
+## SourceMaps
+
+SourceMaps are supported and enabled by default, you can disable this feature 
+via `--no-source-map` boolean option:
+
+    % browserify -t [ reactify --no-source-map ] main.js
+
+or you can configure it in package.json
+
+```json
+{
+    "name": "my-package",
+    "browserify": {
+        "transform": [
+            ["reactify", {"sourceMap": false}]
+        ]
+    }
+}
+```
+
+
 ## Troubleshooting
 
 ### Code in 3rd-party packages isn't being transformed by reactify

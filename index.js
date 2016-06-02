@@ -1,5 +1,5 @@
 /**
- * Reactify â€” a Browserify transform for JSX (a superset of JS used by React.js)
+ * Reactify — a Browserify transform for JSX (a superset of JS used by React.js)
  */
 "use strict";
 
@@ -25,7 +25,7 @@ function reactify(filename, options) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
-          sourceMap: true,
+          sourceMap: options.sourceMap !== false && options['source-map'] !== false,
           sourceFilename: filename,
           stripTypes: options['strip-types'] || options.stripTypes,
           harmony: options.harmony || options.es6
