@@ -25,7 +25,9 @@ function reactify(filename, options) {
       try {
         var output = ReactTools.transform(source, {
           es5: options.target === 'es5',
-          sourceMap: true,
+          sourceMap: 'source-map' in options ? options['source-map'] : (
+                     'sourceMap'  in options ? options.sourceMap :
+                     true),
           sourceFilename: filename,
           stripTypes: options['strip-types'] || options.stripTypes,
           harmony: options.harmony || options.es6
