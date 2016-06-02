@@ -4,17 +4,19 @@
   "description": "Browserify transform for JSX (a superset of JS used by React.js)",
   "main": "index.js",
   "dependencies": {
-    "through": "~2.3.4",
-    "react-tools": "~0.13.0"
+    "through": "^2.3.4"
+  },
+  "peerDependencies": {
+    "react-tools": "^0.13.1"
   },
   "devDependencies": {
-    "browserify": "4.x.x",
-    "coffeeify": "~0.x.x",
+    "browserify": "^9.0.3",
+    "coffeeify": "^1.0.0",
     "es6-module-jstransform": "^0.1.3",
     "concat-stream": "~1.4.8",
     "jshint": "^2.5.10",
-    "mocha": "~1.9.0",
-    "semver": "~1.1.4"
+    "mocha": "^2.2.1",
+    "semver": "^4.3.3"
   },
   "repository": {
     "type": "git",

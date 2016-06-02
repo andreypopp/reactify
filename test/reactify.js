@@ -8,10 +8,13 @@ var fs          = require('fs');
 describe('reactify', function() {
 
   function bundle(entry, cb) {
-    return browserify(entry, {basedir: __dirname})
-      .transform(coffeeify)
-      .transform(reactify)
-      .bundle({debug: true}, cb);
+    return browserify(entry, {
+      basedir: __dirname,
+      debug: true
+    })
+    .transform(coffeeify)
+    .transform(reactify)
+    .bundle(cb);
   };
 
   function normalizeWhitespace(src) {
@@ -20,18 +23,9 @@ describe('reactify', function() {
 
   function assertContains(bundle, code) {
     code = normalizeWhitespace(code);
-    bundle = normalizeWhitespace(bundle);
+    bundle = normalizeWhitespace(bundle.toString());
     assert(bundle.indexOf(code) > -1, "bundle does not contain: " + code);
   }
-
-  it('works for *.js with pragma', function(done) {
-    bundle('./fixtures/main.js', function(err, result) {
-      assert(!err);
-      assert(result);
-      assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
-      done();
-    });
-  });
 
   it('works for *.jsx', function(done) {
     bundle('./fixtures/main.jsx', function(err, result) {
@@ -54,7 +48,8 @@ describe('reactify', function() {
   it('returns error on invalid JSX', function(done) {
     bundle('./fixtures/invalid.js', function(err, result) {
       assert(err);
-      assertContains(String(err), 'Parse Error: Line 6: Unexpected token');
+      console.log(String(err));
+      assertContains(String(err), 'ParseError: Unexpected token');
       assert(!result);
       done();
     });
@@ -84,18 +79,7 @@ describe('reactify', function() {
 
     it('activates via extension option', function(done) {
       browserify('./fixtures/main.jsnox', {basedir: __dirname})
-        .transform({extension: 'jsnox'}, reactify)
-        .bundle(function(err, result) {
-          assert(!err);
-          assert(result);
-          assertContains(result, 'React.createElement("h1", null, "Hello, world!")');
-          done();
-        });
-    });
-
-    it('activates via x option', function(done) {
-      browserify('./fixtures/main.jsnox', {basedir: __dirname})
-        .transform({x: 'jsnox'}, reactify)
+        .transform({extensions: [ '.jsnox' ]}, reactify)
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
@@ -162,7 +146,7 @@ describe('reactify', function() {
 
     it('activates via "strip-types" option', function(done) {
       browserify('./fixtures/main.strip-types.js', {basedir: __dirname})
-        .transform({'strip-types': true}, reactify)
+        .transform({'strip-types': true, extensions: [ '.js' ]}, reactify)
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
@@ -173,7 +157,7 @@ describe('reactify', function() {
 
     it('activates via "stripTypes" option', function(done) {
       browserify('./fixtures/main.strip-types.js', {basedir: __dirname})
-        .transform({stripTypes: true}, reactify)
+        .transform({stripTypes: true, extensions: [ '.js' ]}, reactify)
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
