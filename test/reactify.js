@@ -147,11 +147,26 @@ describe('reactify', function() {
 
     it('activates via target option', function(done) {
       browserify('./fixtures/main.es6-target-es5.jsx', {basedir: __dirname})
-        .transform({es6: true, target: 'es5'}, reactify)
+        .transform({es6: true}, reactify)
         .bundle(function(err, result) {
           assert(!err);
           assert(result);
           assertContains(result, ' Object.defineProperty(Foo.prototype,"bar",{configurable:true,get:function() {"use strict";');
+          done();
+        });
+    });
+
+  });
+
+  describe('transforming with es3 as a target', function() {
+
+    it('activates via target option', function(done) {
+      browserify('./fixtures/main.es6-target-es3.jsx', {basedir: __dirname})
+        .transform({es6: true, target: 'es3'}, reactify)
+        .bundle(function(err, result) {
+          assert(!err);
+          assert(result);
+          assertContains(result, ' Foo.prototype.bar=function() {"use strict";};');
           done();
         });
     });

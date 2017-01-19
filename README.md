@@ -39,9 +39,9 @@ boolean option:
 
     % browserify -t [ reactify --es6 ] main.js
 
-es6 class getter and setter methods can be activated via `--target es5` option:
+the `--target es3` will avoid uses of `defineProperty` and quote reserved words:
 
-    % browserify -t [ reactify --es6 --target es5 ] main.js
+    % browserify -t [ reactify --es6 --target es3 ] main.js
 
 You can also configure it in package.json
 
